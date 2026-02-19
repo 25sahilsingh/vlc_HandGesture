@@ -223,7 +223,7 @@ def main():
     )
 
     recognizer = GestureRecognizer.create_from_options(options)
-    cap = cv2.VideoCapture(1)
+    cap = cv2.VideoCapture(0)
 
     if not cap.isOpened():
         print("Camera not available")

@@ -51,13 +51,45 @@ vlc_HandGesture/
 
 # 🛠️ Installation
 
+---
+
 ## 1️⃣ Install Python 3.10 (via pyenv – Recommended)
+
+⚠️ Do NOT modify system Python on Jetson.
+
+### 🔹 Install Required Build Dependencies (IMPORTANT)
+
+```bash
+sudo apt update
+sudo apt install make build-essential libssl-dev zlib1g-dev \
+libbz2-dev libreadline-dev libsqlite3-dev curl git \
+libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev \
+libffi-dev liblzma-dev
+```
+
+These dependencies are required for successfully compiling Python via pyenv on Ubuntu 22.04 / JetPack 6.x.
+
+---
+
+### 🔹 Install pyenv
 
 ```bash
 curl -fsSL https://pyenv.run | bash
 ```
 
-Add to `~/.bashrc`:
+---
+
+## 🔹 Configure Bash Startup Files (IMPORTANT)
+
+Stock Bash startup files vary between Linux distributions.  
+To ensure pyenv works in **both interactive and login shells**, add configuration to:
+
+- `~/.bashrc`
+- AND one of: `~/.profile`, `~/.bash_profile`, or `~/.bash_login`
+
+---
+
+### Add to `~/.bashrc`
 
 ```bash
 echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
@@ -65,19 +97,69 @@ echo '[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bas
 echo 'eval "$(pyenv init - bash)"' >> ~/.bashrc
 ```
 
-Restart shell:
+---
+
+### If you have `~/.profile`
+
+```bash
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.profile
+echo '[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.profile
+echo 'eval "$(pyenv init - bash)"' >> ~/.profile
+```
+
+---
+
+### OR if you use `~/.bash_profile`
+
+```bash
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bash_profile
+echo '[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bash_profile
+echo 'eval "$(pyenv init - bash)"' >> ~/.bash_profile
+```
+
+---
+
+### ⚠️ Important Bash Warning
+
+Some systems configure `BASH_ENV` to source `.bashrc` automatically.
+
+On such systems, you should put:
+
+```
+eval "$(pyenv init - bash)"
+```
+
+ONLY in `.bash_profile`, NOT in `.bashrc`.
+
+Otherwise, you may experience:
+- Infinite shell loop
+- Strange pyenv behavior
+
+(See pyenv issue #264 for details.)
+
+---
+
+## 🔹 Restart Shell
 
 ```bash
 exec "$SHELL"
-pyenv install 3.10
-pyenv global 3.10
+```
+
+---
+
+## 🔹 Install Python 3.10 (Recommended Specific Version)
+
+```bash
+pyenv install 3.10.13
+pyenv global 3.10.13
+pyenv rehash
 python --version
 ```
 
 Expected:
 
 ```
-Python 3.10.x
+Python 3.10.13
 ```
 
 ---
@@ -178,7 +260,7 @@ cv2.VideoCapture(1)
 - VLC RC communication design  
 - Jetson-specific performance considerations  
 
-If publishing professionally, consider adding:
+For professional publishing, consider adding:
 
 - Architecture diagram (PNG inside repo)  
 - Demo GIF  

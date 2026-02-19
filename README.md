@@ -117,28 +117,6 @@ echo '[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bas
 echo 'eval "$(pyenv init - bash)"' >> ~/.bash_profile
 ```
 
----
-
-### ⚠️ Important Bash Warning
-
-Some systems configure `BASH_ENV` to source `.bashrc` automatically.
-
-On such systems, you should put:
-
-```
-eval "$(pyenv init - bash)"
-```
-
-ONLY in `.bash_profile`, NOT in `.bashrc`.
-
-Otherwise, you may experience:
-- Infinite shell loop
-- Strange pyenv behavior
-
-(See pyenv issue #264 for details.)
-
----
-
 ## 🔹 Restart Shell
 
 ```bash

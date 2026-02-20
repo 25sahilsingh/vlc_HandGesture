@@ -128,8 +128,9 @@ def result_callback(result, output_image, timestamp_ms):
 def handle_gestures(vlc: VLCController):
     global MODE, prev_x, prev_y,playing,fullscreen,video_length
     rightindex=1
-    print(_latest_handedness)
-    print(_latest_gestures)
+    #needed if you want to know which gesture is being detected
+   # print(_latest_handedness)
+   # print(_latest_gestures)
     if len(_latest_handedness)==1:
         global last_volume
         if(_latest_gestures[0]=="Closed_Fist"):
@@ -224,7 +225,8 @@ def main():
 
     recognizer = GestureRecognizer.create_from_options(options)
     cap = cv2.VideoCapture(0)
-
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 360)
     if not cap.isOpened():
         print("Camera not available")
         return
